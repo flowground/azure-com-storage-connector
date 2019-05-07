@@ -1,0 +1,40 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "requestBody": {
+            "description": "The parameters used to check the availability of the storage account name.",
+            "properties": {
+                "name": {
+                    "description": "The storage account name.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The type of resource, Microsoft.Storage/storageAccounts",
+                    "enum": [
+                        "Microsoft.Storage/storageAccounts"
+                    ],
+                    "type": "string",
+                    "x-ms-enum": {
+                        "modelAsString": false,
+                        "name": "Type"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        }
+    }
+}

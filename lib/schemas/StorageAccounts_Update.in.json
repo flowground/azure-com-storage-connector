@@ -1,0 +1,484 @@
+{
+    "type": "object",
+    "properties": {
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[-\\w\\._\\(\\)]+$"
+        },
+        "accountName": {
+            "required": true,
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 24
+        },
+        "subscriptionId": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "requestBody": {
+            "description": "The parameters that can be provided when updating the storage account properties.",
+            "properties": {
+                "identity": {
+                    "description": "The identity of the resource.",
+                    "properties": {
+                        "principalId": {
+                            "description": "The principal ID of resource identity.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "tenantId": {
+                            "description": "The tenant ID of resource.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "type": {
+                            "description": "The identity type.",
+                            "enum": [
+                                "SystemAssigned"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": false,
+                                "name": "IdentityType"
+                            }
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                },
+                "kind": {
+                    "description": "Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server.",
+                    "enum": [
+                        "Storage",
+                        "StorageV2",
+                        "BlobStorage",
+                        "FileStorage",
+                        "BlockBlobStorage"
+                    ],
+                    "type": "string",
+                    "x-ms-enum": {
+                        "modelAsString": false,
+                        "name": "Kind"
+                    }
+                },
+                "properties": {
+                    "description": "The parameters used when updating a storage account.",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "accessTier": {
+                            "description": "Required for storage accounts where kind = BlobStorage. The access tier used for billing.",
+                            "enum": [
+                                "Hot",
+                                "Cool"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": false,
+                                "name": "AccessTier"
+                            }
+                        },
+                        "azureFilesAadIntegration": {
+                            "description": "Enables Azure Files AAD Integration for SMB if sets to true.",
+                            "type": "boolean",
+                            "x-ms-client-name": "EnableAzureFilesAadIntegration"
+                        },
+                        "customDomain": {
+                            "description": "Custom domain assigned to the storage account by the user. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property.",
+                            "properties": {
+                                "name": {
+                                    "description": "Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source.",
+                                    "type": "string"
+                                },
+                                "useSubDomainName": {
+                                    "description": "Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ],
+                            "type": "object"
+                        },
+                        "encryption": {
+                            "description": "Provides the encryption settings on the account. The default setting is unencrypted.",
+                            "properties": {
+                                "keySource": {
+                                    "default": "Microsoft.Storage",
+                                    "description": "The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault",
+                                    "enum": [
+                                        "Microsoft.Storage",
+                                        "Microsoft.Keyvault"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "KeySource"
+                                    }
+                                },
+                                "keyvaultproperties": {
+                                    "description": "Properties provided by key vault.",
+                                    "x-ms-client-name": "KeyVaultProperties",
+                                    "properties": {
+                                        "keyname": {
+                                            "description": "The name of KeyVault key.",
+                                            "type": "string",
+                                            "x-ms-client-name": "KeyName"
+                                        },
+                                        "keyvaulturi": {
+                                            "description": "The Uri of KeyVault.",
+                                            "type": "string",
+                                            "x-ms-client-name": "KeyVaultUri"
+                                        },
+                                        "keyversion": {
+                                            "description": "The version of KeyVault key.",
+                                            "type": "string",
+                                            "x-ms-client-name": "KeyVersion"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "services": {
+                                    "description": "List of services which support encryption.",
+                                    "properties": {
+                                        "blob": {
+                                            "description": "The encryption function of the blob storage service.",
+                                            "properties": {
+                                                "enabled": {
+                                                    "description": "A boolean indicating whether or not the service encrypts the data as it is stored.",
+                                                    "type": "boolean"
+                                                },
+                                                "lastEnabledTime": {
+                                                    "description": "Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate.",
+                                                    "format": "date-time",
+                                                    "readOnly": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "file": {
+                                            "description": "The encryption function of the file storage service.",
+                                            "properties": {
+                                                "enabled": {
+                                                    "description": "A boolean indicating whether or not the service encrypts the data as it is stored.",
+                                                    "type": "boolean"
+                                                },
+                                                "lastEnabledTime": {
+                                                    "description": "Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate.",
+                                                    "format": "date-time",
+                                                    "readOnly": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "queue": {
+                                            "description": "The encryption function of the queue storage service.",
+                                            "readOnly": true,
+                                            "properties": {
+                                                "enabled": {
+                                                    "description": "A boolean indicating whether or not the service encrypts the data as it is stored.",
+                                                    "type": "boolean"
+                                                },
+                                                "lastEnabledTime": {
+                                                    "description": "Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate.",
+                                                    "format": "date-time",
+                                                    "readOnly": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "table": {
+                                            "description": "The encryption function of the table storage service.",
+                                            "readOnly": true,
+                                            "properties": {
+                                                "enabled": {
+                                                    "description": "A boolean indicating whether or not the service encrypts the data as it is stored.",
+                                                    "type": "boolean"
+                                                },
+                                                "lastEnabledTime": {
+                                                    "description": "Gets a rough estimate of the date/time when the encryption was last enabled by the user. Only returned when encryption is enabled. There might be some unencrypted blobs which were written after this time, as it is just a rough estimate.",
+                                                    "format": "date-time",
+                                                    "readOnly": true,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "keySource"
+                            ],
+                            "type": "object"
+                        },
+                        "networkAcls": {
+                            "description": "Network rule set",
+                            "x-ms-client-name": "NetworkRuleSet",
+                            "properties": {
+                                "bypass": {
+                                    "default": "AzureServices",
+                                    "description": "Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, \"Logging, Metrics\"), or None to bypass none of those traffics.",
+                                    "enum": [
+                                        "None",
+                                        "Logging",
+                                        "Metrics",
+                                        "AzureServices"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-client-name": "Bypass",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "Bypass"
+                                    }
+                                },
+                                "defaultAction": {
+                                    "default": "Allow",
+                                    "description": "Specifies the default action of allow or deny when no other rules match.",
+                                    "enum": [
+                                        "Allow",
+                                        "Deny"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": false,
+                                        "name": "DefaultAction"
+                                    }
+                                },
+                                "ipRules": {
+                                    "description": "Sets the IP ACL rules",
+                                    "items": {
+                                        "description": "IP rule with specific IP or IP range in CIDR format.",
+                                        "properties": {
+                                            "action": {
+                                                "default": "Allow",
+                                                "description": "The action of IP ACL rule.",
+                                                "enum": [
+                                                    "Allow"
+                                                ],
+                                                "type": "string",
+                                                "x-ms-enum": {
+                                                    "modelAsString": false,
+                                                    "name": "Action"
+                                                }
+                                            },
+                                            "value": {
+                                                "description": "Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed.",
+                                                "type": "string",
+                                                "x-ms-client-name": "IPAddressOrRange"
+                                            }
+                                        },
+                                        "required": [
+                                            "value"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "virtualNetworkRules": {
+                                    "description": "Sets the virtual network rules",
+                                    "items": {
+                                        "description": "Virtual Network rule.",
+                                        "properties": {
+                                            "action": {
+                                                "default": "Allow",
+                                                "description": "The action of virtual network rule.",
+                                                "enum": [
+                                                    "Allow"
+                                                ],
+                                                "type": "string",
+                                                "x-ms-enum": {
+                                                    "modelAsString": false,
+                                                    "name": "Action"
+                                                }
+                                            },
+                                            "id": {
+                                                "description": "Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}.",
+                                                "type": "string",
+                                                "x-ms-client-name": "VirtualNetworkResourceId"
+                                            },
+                                            "state": {
+                                                "description": "Gets the state of virtual network rule.",
+                                                "enum": [
+                                                    "provisioning",
+                                                    "deprovisioning",
+                                                    "succeeded",
+                                                    "failed",
+                                                    "networkSourceDeleted"
+                                                ],
+                                                "type": "string",
+                                                "x-ms-enum": {
+                                                    "modelAsString": false,
+                                                    "name": "State"
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "defaultAction"
+                            ],
+                            "type": "object"
+                        },
+                        "supportsHttpsTrafficOnly": {
+                            "description": "Allows https traffic only to storage service if sets to true.",
+                            "type": "boolean",
+                            "x-ms-client-name": "EnableHttpsTrafficOnly"
+                        }
+                    }
+                },
+                "sku": {
+                    "description": "Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value.",
+                    "properties": {
+                        "capabilities": {
+                            "description": "The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc.",
+                            "items": {
+                                "description": "The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc.",
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc.",
+                                        "readOnly": true,
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "description": "A string value to indicate states of given capability. Possibly 'true' or 'false'.",
+                                        "readOnly": true,
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "readOnly": true,
+                            "type": "array"
+                        },
+                        "kind": {
+                            "description": "Indicates the type of storage account.",
+                            "enum": [
+                                "Storage",
+                                "StorageV2",
+                                "BlobStorage",
+                                "FileStorage",
+                                "BlockBlobStorage"
+                            ],
+                            "readOnly": true,
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": false,
+                                "name": "Kind"
+                            }
+                        },
+                        "locations": {
+                            "description": "The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.).",
+                            "items": {
+                                "type": "string"
+                            },
+                            "readOnly": true,
+                            "type": "array"
+                        },
+                        "name": {
+                            "description": "Gets or sets the SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType.",
+                            "enum": [
+                                "Standard_LRS",
+                                "Standard_GRS",
+                                "Standard_RAGRS",
+                                "Standard_ZRS",
+                                "Premium_LRS",
+                                "Premium_ZRS"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": false,
+                                "name": "SkuName"
+                            }
+                        },
+                        "resourceType": {
+                            "description": "The type of the resource, usually it is 'storageAccounts'.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "restrictions": {
+                            "description": "The restrictions because of which SKU cannot be used. This is empty if there are no restrictions.",
+                            "items": {
+                                "description": "The restriction because of which SKU cannot be used.",
+                                "properties": {
+                                    "reasonCode": {
+                                        "description": "The reason for the restriction. As of now this can be \"QuotaId\" or \"NotAvailableForSubscription\". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The \"NotAvailableForSubscription\" is related to capacity at DC.",
+                                        "enum": [
+                                            "QuotaId",
+                                            "NotAvailableForSubscription"
+                                        ],
+                                        "type": "string",
+                                        "x-ms-enum": {
+                                            "modelAsString": true,
+                                            "name": "ReasonCode"
+                                        }
+                                    },
+                                    "type": {
+                                        "description": "The type of restrictions. As of now only possible value for this is location.",
+                                        "readOnly": true,
+                                        "type": "string"
+                                    },
+                                    "values": {
+                                        "description": "The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted.",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "readOnly": true,
+                                        "type": "array"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "tier": {
+                            "description": "Gets the SKU tier. This is based on the SKU name.",
+                            "enum": [
+                                "Standard",
+                                "Premium"
+                            ],
+                            "readOnly": true,
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": false,
+                                "name": "SkuTier"
+                            }
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                },
+                "tags": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters.",
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        }
+    }
+}

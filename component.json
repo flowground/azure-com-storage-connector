@@ -1,0 +1,305 @@
+{
+    "title": "StorageManagementClient",
+    "description": "The Azure Storage Management API.",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/azure.com/storage/2018-07-01/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://management.azure.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "azure_auth": {
+                "label": "Azure Active Directory OAuth2 Flow",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "Operations_List": {
+            "main": "./lib/actions/Operations_List.js",
+            "title": "Lists all of the available Storage Rest API operations.",
+            "description": "Lists all of the available Storage Rest API operations.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Operations_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_CheckNameAvailability": {
+            "main": "./lib/actions/StorageAccounts_CheckNameAvailability.js",
+            "title": "Checks that the storage account name is valid and is not already in use.",
+            "description": "Checks that the storage account name is valid and is not already in use.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_CheckNameAvailability.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Usages_ListByLocation": {
+            "main": "./lib/actions/Usages_ListByLocation.js",
+            "title": "Gets the current usage count and the limit for the resources of the location under the subscription.",
+            "description": "Gets the current usage count and the limit for the resources of the location under the subscription.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Usages_ListByLocation.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Skus_List": {
+            "main": "./lib/actions/Skus_List.js",
+            "title": "Lists the available SKUs supported by Microsoft.Storage for given subscription.",
+            "description": "Lists the available SKUs supported by Microsoft.Storage for given subscription.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Skus_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_List": {
+            "main": "./lib/actions/StorageAccounts_List.js",
+            "title": "Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.",
+            "description": "Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_ListByResourceGroup": {
+            "main": "./lib/actions/StorageAccounts_ListByResourceGroup.js",
+            "title": "Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this.",
+            "description": "Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_ListByResourceGroup.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_Delete": {
+            "main": "./lib/actions/StorageAccounts_Delete.js",
+            "title": "Deletes a storage account in Microsoft Azure.",
+            "description": "Deletes a storage account in Microsoft Azure.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_GetProperties": {
+            "main": "./lib/actions/StorageAccounts_GetProperties.js",
+            "title": "Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.",
+            "description": "Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_GetProperties.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_Update": {
+            "main": "./lib/actions/StorageAccounts_Update.js",
+            "title": "The update operation can be used to update the SKU, encryption, access tier, or tags for a storage account. It can also be used to map the account to a custom domain. Only one custom domain is supported per storage account; the replacement/change of custom domain is not supported. In order to replace an old custom domain, the old value must be cleared/unregistered before a new value can be set. The update of multiple properties is supported. This call does not change the storage keys for the account. If you want to change the storage account keys, use the regenerate keys operation. The location and name of the storage account cannot be changed after creation.",
+            "description": "The update operation can be used to update the SKU, encryption, access tier, or tags for a storage account. It can also be used to map the account to a custom domain. Only one custom domain is supported per storage account; the replacement/change of custom domain is not supported. In order to replace an old custom domain, the old value must be cleared/unregistered before a new value can be set. The update of multiple properties is supported. This call does not change the storage keys for the account. If you want to change the storage account keys, use the regenerate keys operation. The location and name of the storage account cannot be changed after creation.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_Update.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_Create": {
+            "main": "./lib/actions/StorageAccounts_Create.js",
+            "title": "Asynchronously creates a new storage account with the specified parameters. If an account is already created and a subsequent create request is issued with different properties, the account properties will be updated. If an account is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.",
+            "description": "Asynchronously creates a new storage account with the specified parameters. If an account is already created and a subsequent create request is issued with different properties, the account properties will be updated. If an account is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_Create.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_ListAccountSAS": {
+            "main": "./lib/actions/StorageAccounts_ListAccountSAS.js",
+            "title": "List SAS credentials of a storage account.",
+            "description": "List SAS credentials of a storage account.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_ListAccountSAS.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_ListServiceSAS": {
+            "main": "./lib/actions/StorageAccounts_ListServiceSAS.js",
+            "title": "List service SAS credentials of a specific resource.",
+            "description": "List service SAS credentials of a specific resource.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_ListServiceSAS.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_Failover": {
+            "main": "./lib/actions/StorageAccounts_Failover.js",
+            "title": "Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account's primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover.",
+            "description": "Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account's primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_Failover.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_ListKeys": {
+            "main": "./lib/actions/StorageAccounts_ListKeys.js",
+            "title": "Lists the access keys for the specified storage account.",
+            "description": "Lists the access keys for the specified storage account.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_ListKeys.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "StorageAccounts_RegenerateKey": {
+            "main": "./lib/actions/StorageAccounts_RegenerateKey.js",
+            "title": "Regenerates one of the access keys for the specified storage account.",
+            "description": "Regenerates one of the access keys for the specified storage account.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/StorageAccounts_RegenerateKey.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,122 @@
+{
+    "type": "object",
+    "properties": {
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[-\\w\\._\\(\\)]+$"
+        },
+        "accountName": {
+            "required": true,
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 24
+        },
+        "subscriptionId": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "requestBody": {
+            "description": "The parameters to list SAS credentials of a storage account.",
+            "properties": {
+                "keyToSign": {
+                    "description": "The key to sign the account SAS token with.",
+                    "type": "string"
+                },
+                "signedExpiry": {
+                    "description": "The time at which the shared access signature becomes invalid.",
+                    "format": "date-time",
+                    "type": "string",
+                    "x-ms-client-name": "SharedAccessExpiryTime"
+                },
+                "signedIp": {
+                    "description": "An IP address or a range of IP addresses from which to accept requests.",
+                    "type": "string",
+                    "x-ms-client-name": "IPAddressOrRange"
+                },
+                "signedPermission": {
+                    "description": "The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p).",
+                    "enum": [
+                        "r",
+                        "d",
+                        "w",
+                        "l",
+                        "a",
+                        "c",
+                        "u",
+                        "p"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Permissions",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "Permissions"
+                    }
+                },
+                "signedProtocol": {
+                    "description": "The protocol permitted for a request made with the account SAS.",
+                    "enum": [
+                        "https,http",
+                        "https"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Protocols",
+                    "x-ms-enum": {
+                        "modelAsString": false,
+                        "name": "HttpProtocol"
+                    }
+                },
+                "signedResourceTypes": {
+                    "description": "The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files.",
+                    "enum": [
+                        "s",
+                        "c",
+                        "o"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "ResourceTypes",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "SignedResourceTypes"
+                    }
+                },
+                "signedServices": {
+                    "description": "The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f).",
+                    "enum": [
+                        "b",
+                        "q",
+                        "t",
+                        "f"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Services",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "Services"
+                    }
+                },
+                "signedStart": {
+                    "description": "The time at which the SAS becomes valid.",
+                    "format": "date-time",
+                    "type": "string",
+                    "x-ms-client-name": "SharedAccessStartTime"
+                }
+            },
+            "required": [
+                "signedServices",
+                "signedResourceTypes",
+                "signedPermission",
+                "signedExpiry"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        }
+    }
+}

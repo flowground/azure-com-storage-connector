@@ -1,0 +1,160 @@
+{
+    "type": "object",
+    "properties": {
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "pattern": "^[-\\w\\._\\(\\)]+$"
+        },
+        "accountName": {
+            "required": true,
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 24
+        },
+        "subscriptionId": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "requestBody": {
+            "description": "The parameters to list service SAS credentials of a specific resource.",
+            "properties": {
+                "canonicalizedResource": {
+                    "description": "The canonical path to the signed resource.",
+                    "type": "string"
+                },
+                "endPk": {
+                    "description": "The end of partition key.",
+                    "type": "string",
+                    "x-ms-client-name": "PartitionKeyEnd"
+                },
+                "endRk": {
+                    "description": "The end of row key.",
+                    "type": "string",
+                    "x-ms-client-name": "RowKeyEnd"
+                },
+                "keyToSign": {
+                    "description": "The key to sign the account SAS token with.",
+                    "type": "string"
+                },
+                "rscc": {
+                    "description": "The response header override for cache control.",
+                    "type": "string",
+                    "x-ms-client-name": "CacheControl"
+                },
+                "rscd": {
+                    "description": "The response header override for content disposition.",
+                    "type": "string",
+                    "x-ms-client-name": "ContentDisposition"
+                },
+                "rsce": {
+                    "description": "The response header override for content encoding.",
+                    "type": "string",
+                    "x-ms-client-name": "ContentEncoding"
+                },
+                "rscl": {
+                    "description": "The response header override for content language.",
+                    "type": "string",
+                    "x-ms-client-name": "ContentLanguage"
+                },
+                "rsct": {
+                    "description": "The response header override for content type.",
+                    "type": "string",
+                    "x-ms-client-name": "ContentType"
+                },
+                "signedExpiry": {
+                    "description": "The time at which the shared access signature becomes invalid.",
+                    "format": "date-time",
+                    "type": "string",
+                    "x-ms-client-name": "SharedAccessExpiryTime"
+                },
+                "signedIdentifier": {
+                    "description": "A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table.",
+                    "maxLength": 64,
+                    "type": "string",
+                    "x-ms-client-name": "Identifier"
+                },
+                "signedIp": {
+                    "description": "An IP address or a range of IP addresses from which to accept requests.",
+                    "type": "string",
+                    "x-ms-client-name": "IPAddressOrRange"
+                },
+                "signedPermission": {
+                    "description": "The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p).",
+                    "enum": [
+                        "r",
+                        "d",
+                        "w",
+                        "l",
+                        "a",
+                        "c",
+                        "u",
+                        "p"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Permissions",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "Permissions"
+                    }
+                },
+                "signedProtocol": {
+                    "description": "The protocol permitted for a request made with the account SAS.",
+                    "enum": [
+                        "https,http",
+                        "https"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Protocols",
+                    "x-ms-enum": {
+                        "modelAsString": false,
+                        "name": "HttpProtocol"
+                    }
+                },
+                "signedResource": {
+                    "description": "The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s).",
+                    "enum": [
+                        "b",
+                        "c",
+                        "f",
+                        "s"
+                    ],
+                    "type": "string",
+                    "x-ms-client-name": "Resource",
+                    "x-ms-enum": {
+                        "modelAsString": true,
+                        "name": "signedResource"
+                    }
+                },
+                "signedStart": {
+                    "description": "The time at which the SAS becomes valid.",
+                    "format": "date-time",
+                    "type": "string",
+                    "x-ms-client-name": "SharedAccessStartTime"
+                },
+                "startPk": {
+                    "description": "The start of partition key.",
+                    "type": "string",
+                    "x-ms-client-name": "PartitionKeyStart"
+                },
+                "startRk": {
+                    "description": "The start of row key.",
+                    "type": "string",
+                    "x-ms-client-name": "RowKeyStart"
+                }
+            },
+            "required": [
+                "canonicalizedResource"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        }
+    }
+}
